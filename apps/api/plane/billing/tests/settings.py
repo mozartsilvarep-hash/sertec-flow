@@ -1,0 +1,10 @@
+SECRET_KEY = "billing-isolated-test-settings"
+INSTALLED_APPS = ["django.contrib.auth", "django.contrib.contenttypes", "plane.billing"]
+DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": ":memory:"}}
+USE_TZ = True
+ROOT_URLCONF = "plane.billing.tests.urls"
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+REST_FRAMEWORK = {"UNAUTHENTICATED_USER": None}
+WEB_URL = "https://flow.example.test"
+ALLOWED_HOSTS = ["testserver"]
+MIGRATION_MODULES = {}

@@ -45,3 +45,7 @@ Faça backup do PostgreSQL, volumes de uploads e arquivo de configuração antes
 
 Código baixado e configuração adicional revisada estaticamente. Este ambiente de preparação não tem Docker; build, migrações, Nginx e fluxo funcional ainda precisam ser verificados na OVH. O pacote não foi publicado nem instalado em servidor remoto.
 LICENSE.txt e COPYRIGHT.txt originais foram preservados.
+
+## Assinaturas Sertec Flow
+
+Os planos individuais, a configuração do Mercado Pago e a homologação comercial estão descritos em [docs/SERTEC_SUBSCRIPTIONS.md](../../docs/SERTEC_SUBSCRIPTIONS.md). A ativação de cobrança e bloqueio por assinatura exige as verificações desse guia; o arquivo gerado mantém o modo comercial desligado por padrão.

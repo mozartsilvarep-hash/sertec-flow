@@ -7,23 +7,21 @@
 import React from "react";
 import { observer } from "mobx-react";
 import Link from "next/link";
-import { useTranslation } from "@plane/i18n";
-import { PlaneLockup } from "@plane/blocks/icons";
 import { PageHead } from "@/components/core/page-title";
 import { EAuthModes } from "@/helpers/authentication.helper";
 import { useInstance } from "@/hooks/store/use-instance";
 
 const authContentMap = {
   [EAuthModes.SIGN_IN]: {
-    pageTitle: "Sign up",
+    pageTitle: "Entrar",
     text: "auth.common.new_to_plane",
-    linkText: "Sign up",
+    linkText: "Criar conta",
     linkHref: "/sign-up",
   },
   [EAuthModes.SIGN_UP]: {
-    pageTitle: "Sign in",
+    pageTitle: "Criar conta",
     text: "auth.common.already_have_an_account",
-    linkText: "Sign in",
+    linkText: "Entrar",
     linkHref: "/sign-in",
   },
 };
@@ -33,7 +31,6 @@ type AuthHeaderProps = {
 };
 
 export const AuthHeader = observer(function AuthHeader({ type }: AuthHeaderProps) {
-  const { t } = useTranslation();
   // store
   const { config } = useInstance();
   // derived values
@@ -41,16 +38,18 @@ export const AuthHeader = observer(function AuthHeader({ type }: AuthHeaderProps
 
   return (
     <AuthHeaderBase
-      pageTitle={t(authContentMap[type].pageTitle)}
+      pageTitle={authContentMap[type].pageTitle}
       additionalAction={
         enableSignUpConfig && (
           <div className="flex flex-col items-end text-center text-13 font-medium text-tertiary sm:flex-row sm:items-center sm:gap-2">
-            <span className="text-body-sm-regular text-tertiary">{t(authContentMap[type].text)}</span>
+            <span className="text-body-sm-regular text-tertiary">
+              {type === EAuthModes.SIGN_IN ? "Primeiro acesso?" : "Já tem uma conta?"}
+            </span>
             <Link
               href={authContentMap[type].linkHref}
               className="text-body-sm-semibold text-accent-primary hover:underline"
             >
-              {t(authContentMap[type].linkText)}
+              {authContentMap[type].linkText}
             </Link>
           </div>
         )
@@ -68,10 +67,12 @@ export function AuthHeaderBase(props: TAuthHeaderBase) {
   const { pageTitle, additionalAction } = props;
   return (
     <>
-      <PageHead title={pageTitle + " - Plane"} />
+      <PageHead title={pageTitle + " — Sertec Flow"} />
       <div className="sticky top-0 flex w-full flex-shrink-0 items-center justify-between gap-6">
         <Link href="/">
-          <PlaneLockup height={20} width={95} className="text-primary" />
+          <span className="text-24 font-semibold tracking-tight">
+            Sertec<span className="font-normal"> Flow</span>
+          </span>
         </Link>
         {additionalAction}
       </div>

@@ -8,6 +8,7 @@ import type { ReactNode } from "react";
 import { observer } from "mobx-react";
 import { useSearchParams, usePathname } from "next/navigation";
 import useSWR from "swr";
+import { billingService } from "@/services/billing.service";
 // components
 import { LogoSpinner } from "@/components/common/logo-spinner";
 // helpers
@@ -57,6 +58,12 @@ export const AuthenticationWrapper = observer(function AuthenticationWrapper(pro
     shouldRetryOnError: false,
   });
 
+  const { data: billingAccount, error: billingError } = useSWR(
+    currentUser?.id ? "SERTEC_BILLING_ACCOUNT" : null,
+    () => billingService.account(),
+    { shouldRetryOnError: false }
+  );
+
   const isUserOnboard =
     currentUserProfile?.is_onboarded ||
     (currentUserProfile?.onboarding_step?.profile_complete &&
@@ -96,6 +103,19 @@ export const AuthenticationWrapper = observer(function AuthenticationWrapper(pro
     );
 
   if (pageType === EPageTypes.PUBLIC) return <>{children}</>;
+
+  if (currentUser?.id && !billingAccount && !billingError) return <LogoSpinner />;
+  if (currentUser?.id && billingAccount?.require_subscription && !billingAccount.is_admin) {
+    if (!billingAccount.active) {
+      router.replace("/assinatura/");
+      return <></>;
+    }
+    if (pageType === EPageTypes.NON_AUTHENTICATED || pageType === EPageTypes.ONBOARDING) {
+      router.replace(billingAccount.workspace_slug ? `/${billingAccount.workspace_slug}/` : "/assinatura/");
+      return <></>;
+    }
+    if (pageType === EPageTypes.AUTHENTICATED) return <>{children}</>;
+  }
 
   if (pageType === EPageTypes.NON_AUTHENTICATED) {
     if (!currentUser?.id) return <>{children}</>;

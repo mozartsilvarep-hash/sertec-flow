@@ -4,6 +4,10 @@
  * See the LICENSE file for details.
  */
 
+import { route } from "@react-router/dev/routes";
 import type { RouteConfigEntry } from "@react-router/dev/routes";
 
-export const extendedRoutes: RouteConfigEntry[] = [];
+export const extendedRoutes: RouteConfigEntry[] = [
+  route("assinatura", "./routes/sertec/account.tsx"),
+  route("vendas", "./routes/sertec/sales.tsx"),
+];
