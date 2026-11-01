@@ -7,6 +7,7 @@
 import React from "react";
 import { observer } from "mobx-react";
 import Link from "next/link";
+import { SertecLogo } from "@plane/blocks/icons";
 import { PageHead } from "@/components/core/page-title";
 import { EAuthModes } from "@/helpers/authentication.helper";
 import { useInstance } from "@/hooks/store/use-instance";
@@ -67,12 +68,10 @@ export function AuthHeaderBase(props: TAuthHeaderBase) {
   const { pageTitle, additionalAction } = props;
   return (
     <>
-      <PageHead title={pageTitle + " — Sertec Flow"} />
-      <div className="sticky top-0 flex w-full flex-shrink-0 items-center justify-between gap-6">
+      <PageHead title={pageTitle + " — SerTec Flow"} />
+      <div className="sertec-auth-header sticky top-0 flex w-full flex-shrink-0 items-center justify-between gap-6">
         <Link href="/">
-          <span className="text-24 font-semibold tracking-tight">
-            Sertec<span className="font-normal"> Flow</span>
-          </span>
+          <SertecLogo width={210} height={42} />
         </Link>
         {additionalAction}
       </div>

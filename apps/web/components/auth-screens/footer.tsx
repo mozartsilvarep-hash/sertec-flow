@@ -7,9 +7,16 @@ import Link from "next/link";
 export function AuthFooter() {
   return (
     <footer className="sertec-auth-footer">
-      <span>Sertec Flow · Organização para o seu dia a dia.</span>
+      <span>SerTec Flow · Organização para o seu dia a dia.</span>
       <Link href="/assinatura/">Planos e minha assinatura</Link>
-      <span>Baseado em Plane · Software sob AGPL-3.0</span>
+      <a
+        href="https://github.com/mozartsilvarep-hash/sertec-flow"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="Derivado do Plane, sob AGPL-3.0"
+      >
+        Código-fonte e licenças
+      </a>
     </footer>
   );
 }

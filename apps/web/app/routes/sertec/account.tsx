@@ -48,7 +48,7 @@ export default function SubscriptionPage() {
   }
   return (
     <BillingShell>
-      <PageHead title="Minha assinatura — Sertec Flow" />
+      <PageHead title="Minha assinatura — SerTec Flow" />
       <header className="billing-heading">
         <div>
           <h1>Minha assinatura</h1>

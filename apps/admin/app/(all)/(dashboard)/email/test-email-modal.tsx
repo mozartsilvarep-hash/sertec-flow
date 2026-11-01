@@ -127,7 +127,7 @@ export function SendTestEmailModal(props: Props) {
             stretch="auto"
             onClick={handleClose}
             tabIndex={0}
-            label={sendEmailStep === ESendEmailSteps.SEND_EMAIL ? "Cancel" : "Close"}
+            label={sendEmailStep === ESendEmailSteps.SEND_EMAIL ? "Cancel" : "Fechar"}
           />
           {sendEmailStep === ESendEmailSteps.SEND_EMAIL && (
             <Button

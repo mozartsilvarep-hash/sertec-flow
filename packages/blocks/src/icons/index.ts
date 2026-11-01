@@ -45,3 +45,5 @@ export { StartedGroupIcon } from "./state/started-group-icon";
 export { StateGroupIcon } from "./state/state-group-icon";
 export { UnstartedGroupIcon } from "./state/unstarted-group-icon";
 export { PiChatLogo } from "./sub-brand/pi-chat";
+
+export { SertecLogo, SertecSymbol } from "./brand/sertec-logo";

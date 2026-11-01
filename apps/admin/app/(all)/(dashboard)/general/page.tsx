@@ -20,9 +20,8 @@ function GeneralPage() {
   return (
     <PageWrapper
       header={{
-        title: "General settings",
-        description:
-          "Change the name of your instance and instance admin e-mail addresses. Enable or disable telemetry in your instance.",
+        title: "Configurações gerais",
+        description: "Gerencie o nome da instalação, administradores e preferências de telemetria.",
       }}
     >
       {instance && instanceAdmins && <GeneralConfigurationForm instance={instance} instanceAdmins={instanceAdmins} />}
@@ -30,6 +29,6 @@ function GeneralPage() {
   );
 }
 
-export const meta: Route.MetaFunction = () => [{ title: "General Settings - God Mode" }];
+export const meta: Route.MetaFunction = () => [{ title: "Configurações gerais — SerTec Flow" }];
 
 export default observer(GeneralPage);

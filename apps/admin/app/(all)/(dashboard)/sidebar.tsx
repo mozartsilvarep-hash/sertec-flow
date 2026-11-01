@@ -14,6 +14,7 @@ import { useTheme } from "@/hooks/store";
 import { AdminSidebarDropdown } from "./sidebar-dropdown";
 import { AdminSidebarHelpSection } from "./sidebar-help-section";
 import { AdminSidebarMenu } from "./sidebar-menu";
+import { SertecLogo, SertecSymbol } from "@plane/blocks/icons";
 
 export const AdminSidebar = observer(function AdminSidebar() {
   // store
@@ -44,9 +45,12 @@ export const AdminSidebar = observer(function AdminSidebar() {
 
   return (
     <div
-      className={`fixed inset-y-0 z-20 flex h-full flex-shrink-0 flex-grow-0 flex-col border-r border-subtle bg-surface-1 duration-300 md:relative ${isSidebarCollapsed ? "-ml-[290px]" : ""} sm:${isSidebarCollapsed ? "-ml-[290px]" : ""} md:ml-0 ${isSidebarCollapsed ? "w-[70px]" : "w-[290px]"} lg:ml-0 ${isSidebarCollapsed ? "w-[70px]" : "w-[290px]"} `}
+      className={`sertec-admin-sidebar fixed inset-y-0 z-20 flex h-full flex-shrink-0 flex-grow-0 flex-col border-r border-subtle bg-surface-1 duration-300 md:relative ${isSidebarCollapsed ? "-ml-[290px]" : ""} sm:${isSidebarCollapsed ? "-ml-[290px]" : ""} md:ml-0 ${isSidebarCollapsed ? "w-[70px]" : "w-[290px]"} lg:ml-0 ${isSidebarCollapsed ? "w-[70px]" : "w-[290px]"} `}
     >
       <div ref={ref} className="flex h-full w-full flex-1 flex-col">
+        <div className="sertec-sidebar-brand">
+          {isSidebarCollapsed ? <SertecSymbol /> : <SertecLogo width={210} height={42} />}
+        </div>
         <AdminSidebarDropdown />
         <AdminSidebarMenu />
         <AdminSidebarHelpSection />

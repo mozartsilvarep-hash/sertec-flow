@@ -99,8 +99,8 @@ export function InstanceEmailForm(props: IInstanceEmailForm) {
     {
       key: "EMAIL_HOST_PASSWORD",
       type: "password",
-      label: "Password",
-      placeholder: "Password",
+      label: "Senha",
+      placeholder: "Senha",
       error: Boolean(errors.EMAIL_HOST_PASSWORD),
       required: false,
     },
@@ -183,7 +183,7 @@ export function InstanceEmailForm(props: IInstanceEmailForm) {
           <div className="flex w-full max-w-xl flex-col gap-y-10 px-1">
             <div className="mr-8 flex items-center gap-10 pt-4">
               <div className="grow">
-                <div className="text-13 font-medium text-primary">Authentication</div>
+                <div className="text-13 font-medium text-primary">Autenticação</div>
                 <div className="text-11 font-regular text-tertiary">
                   This is optional, but we recommend setting up a username and a password for your SMTP server.
                 </div>
@@ -215,7 +215,7 @@ export function InstanceEmailForm(props: IInstanceEmailForm) {
           onClick={handleSubmit(onSubmit)}
           loading={isSubmitting}
           disabled={!isValid || !isDirty}
-          label={isSubmitting ? "Saving" : "Save changes"}
+          label={isSubmitting ? "Saving" : "Salvar alterações"}
         />
         <Button
           variant="secondary"

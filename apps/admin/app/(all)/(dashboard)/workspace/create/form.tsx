@@ -63,7 +63,7 @@ export function WorkspaceCreateForm() {
             .then(async () => {
               setToast({
                 type: "success",
-                title: "Success!",
+                title: "Concluído",
                 message: "Workspace created successfully.",
               });
               router.push(`/workspace`);
@@ -71,7 +71,7 @@ export function WorkspaceCreateForm() {
             .catch(() => {
               setToast({
                 type: "error",
-                title: "Error!",
+                title: "Não foi possível concluir",
                 message: "Workspace could not be created. Please try again.",
               });
             });
@@ -80,7 +80,7 @@ export function WorkspaceCreateForm() {
       .catch(() => {
         setToast({
           type: "error",
-          title: "Error!",
+          title: "Não foi possível concluir",
           message: "Some error occurred while creating workspace. Please try again.",
         });
       });
@@ -200,7 +200,7 @@ export function WorkspaceCreateForm() {
           onClick={handleSubmit(handleCreateWorkspace)}
           disabled={!isValid}
           loading={isSubmitting}
-          label={isSubmitting ? "Creating workspace" : "Create workspace"}
+          label={isSubmitting ? "Creating workspace" : "Criar espaço de trabalho"}
         />
         <Button
           variant="secondary"

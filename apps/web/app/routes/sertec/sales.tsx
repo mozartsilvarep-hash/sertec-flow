@@ -17,7 +17,7 @@ export default function SalesPage() {
   );
   return (
     <BillingShell sales>
-      <PageHead title="Vendas e assinantes — Sertec Flow" />
+      <PageHead title="Vendas e assinantes — SerTec Flow" />
       <header className="billing-heading">
         <div>
           <h1>Vendas e assinantes</h1>

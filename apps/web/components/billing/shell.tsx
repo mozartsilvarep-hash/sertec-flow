@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
+import { SertecLogo } from "@plane/blocks/icons";
 import { ArrowLeft, CreditCard, ChartNoAxesCombined } from "lucide-react";
 import useSWR from "swr";
 import { billingService } from "@/services/billing.service";
@@ -12,7 +13,7 @@ export function BillingShell({ children, sales = false }: { children: ReactNode;
     <div className="sertec-billing">
       <aside className="billing-sidebar">
         <Link href="/assinatura/" className="sertec-wordmark">
-          Sertec<span>Flow</span>
+          <SertecLogo width={192} height={38} />
         </Link>
         <nav aria-label="Assinaturas">
           <Link href="/assinatura/" aria-current={!sales ? "page" : undefined}>
@@ -31,9 +32,9 @@ export function BillingShell({ children, sales = false }: { children: ReactNode;
           Voltar ao trabalho
         </Link>
         <p>
-          Seu trabalho.
+          Seu trabalho,
           <br />
-          No seu ritmo.
+          em fluxo.
         </p>
       </aside>
       <main className="billing-main" id="billing-content">
