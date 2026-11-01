@@ -40,6 +40,9 @@ export abstract class APIService {
     this.axiosInstance.interceptors.response.use(
       (response) => response,
       (error) => {
+        if (error.response?.status === 402 && !window.location.pathname.startsWith("/assinatura")) {
+          window.location.replace("/assinatura/");
+        }
         if (error.response && error.response.status === 401) {
           const currentPath = window.location.pathname;
           // The entry page ("/") runs its own current-user request on mount;
