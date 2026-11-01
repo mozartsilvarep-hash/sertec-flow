@@ -67,3 +67,6 @@ temp/
 build/
 node_modules/
 README.md
+
+# Credenciais locais do aaPanel
+.env.aapanel

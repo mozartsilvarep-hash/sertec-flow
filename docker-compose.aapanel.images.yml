@@ -1,0 +1,30 @@
+# Use com docker-compose.aapanel.yml. Requer Compose 2.24.4 ou superior.
+# Somente imagens prontas; nenhuma compilação é feita na OVH.
+services:
+  web:
+    build: !reset null
+    image: ghcr.io/mozartsilvarep-hash/sertec-flow-frontend:${SERTEC_IMAGE_TAG:?Defina SERTEC_IMAGE_TAG com a tag sha do workflow}
+  space:
+    build: !reset null
+    image: ghcr.io/mozartsilvarep-hash/sertec-flow-space:${SERTEC_IMAGE_TAG:?Defina SERTEC_IMAGE_TAG com a tag sha do workflow}
+  admin:
+    build: !reset null
+    image: ghcr.io/mozartsilvarep-hash/sertec-flow-admin:${SERTEC_IMAGE_TAG:?Defina SERTEC_IMAGE_TAG com a tag sha do workflow}
+  live:
+    build: !reset null
+    image: ghcr.io/mozartsilvarep-hash/sertec-flow-live:${SERTEC_IMAGE_TAG:?Defina SERTEC_IMAGE_TAG com a tag sha do workflow}
+  api:
+    build: !reset null
+    image: ghcr.io/mozartsilvarep-hash/sertec-flow-backend:${SERTEC_IMAGE_TAG:?Defina SERTEC_IMAGE_TAG com a tag sha do workflow}
+  worker:
+    build: !reset null
+    image: ghcr.io/mozartsilvarep-hash/sertec-flow-backend:${SERTEC_IMAGE_TAG:?Defina SERTEC_IMAGE_TAG com a tag sha do workflow}
+  beat-worker:
+    build: !reset null
+    image: ghcr.io/mozartsilvarep-hash/sertec-flow-backend:${SERTEC_IMAGE_TAG:?Defina SERTEC_IMAGE_TAG com a tag sha do workflow}
+  migrator:
+    build: !reset null
+    image: ghcr.io/mozartsilvarep-hash/sertec-flow-backend:${SERTEC_IMAGE_TAG:?Defina SERTEC_IMAGE_TAG com a tag sha do workflow}
+  proxy:
+    build: !reset null
+    image: ghcr.io/mozartsilvarep-hash/sertec-flow-proxy:${SERTEC_IMAGE_TAG:?Defina SERTEC_IMAGE_TAG com a tag sha do workflow}
