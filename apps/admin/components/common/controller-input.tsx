@@ -71,7 +71,7 @@ export function ControllerInput<TFieldValues extends FieldValues = FieldValues>(
           (showPassword ? (
             <button
               type="button"
-              aria-label="Hide password"
+              aria-label="Ocultar senha"
               className="flex items-center justify-center text-placeholder"
               onClick={() => setShowPassword(false)}
             >
@@ -80,7 +80,7 @@ export function ControllerInput<TFieldValues extends FieldValues = FieldValues>(
           ) : (
             <button
               type="button"
-              aria-label="Show password"
+              aria-label="Mostrar senha"
               className="flex items-center justify-center text-placeholder"
               onClick={() => setShowPassword(true)}
             >

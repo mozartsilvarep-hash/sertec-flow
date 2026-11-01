@@ -4,43 +4,14 @@
  * See the LICENSE file for details.
  */
 
-import { useState } from "react";
-import { observer } from "mobx-react";
-// ui
-import { useTranslation } from "@plane/i18n";
-import { Tooltip } from "@makeplane/propel/components/tooltip";
-// hooks
-import { usePlatformOS } from "@/hooks/use-platform-os";
-import packageJson from "package.json";
-// local components
-import { Button } from "@makeplane/propel/components/button";
-import { PaidPlanUpgradeModal } from "@/components/license/modal/upgrade-modal";
-
-export const WorkspaceEditionBadge = observer(function WorkspaceEditionBadge() {
-  // states
-  const [isPaidPlanPurchaseModalOpen, setIsPaidPlanPurchaseModalOpen] = useState(false);
-  // translation
-  const { t } = useTranslation();
-  // platform
-  const { isMobile } = usePlatformOS();
-
+import Link from "next/link";
+export function WorkspaceEditionBadge() {
   return (
-    <>
-      <PaidPlanUpgradeModal
-        isOpen={isPaidPlanPurchaseModalOpen}
-        handleClose={() => setIsPaidPlanPurchaseModalOpen(false)}
-      />
-      <Tooltip label={`Version: v${packageJson.version}`} disabled={isMobile}>
-        <Button
-          variant="tertiary"
-          size="md"
-          stretch="auto"
-          label="Community"
-          onClick={() => setIsPaidPlanPurchaseModalOpen(true)}
-          aria-haspopup="dialog"
-          aria-label={t("aria_labels.projects_sidebar.edition_badge")}
-        />
-      </Tooltip>
-    </>
+    <Link
+      href="/assinatura/"
+      className="text-12 font-medium text-primary hover:underline focus-visible:outline-2 focus-visible:outline-offset-4"
+    >
+      Minha assinatura SerTec
+    </Link>
   );
-});
+}

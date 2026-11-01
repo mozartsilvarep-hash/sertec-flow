@@ -12,7 +12,7 @@ export function BillingRoot() {
     <section className="size-full overflow-y-auto">
       <SettingsHeading
         title="Minha assinatura"
-        description="Consulte seu plano individual, pagamentos e renovação no Sertec Flow."
+        description="Consulte seu plano individual, pagamentos e renovação no SerTec Flow."
       />
       <div className="mt-6 space-y-4">
         <p className="text-14 text-secondary">

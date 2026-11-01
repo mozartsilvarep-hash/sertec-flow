@@ -138,7 +138,7 @@ const WorkspaceManagementPage = observer(function WorkspaceManagementPage(_props
                   stretch="auto"
                   nativeButton={false}
                   render={<Link href="/workspace/create" />}
-                  label="Create workspace"
+                  label="Criar espaço de trabalho"
                 />
               </div>
             </div>

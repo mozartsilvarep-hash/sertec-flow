@@ -2,8 +2,8 @@
   min-height: 100%;
   height: 100%;
   overflow-y: auto;
-  background: #f8faf7;
-  color: #142f2d;
+  background: #f8fafc;
+  color: #403f41;
   padding: 28px 40px;
   display: flex;
   flex-direction: column;
@@ -19,8 +19,9 @@
   align-items: center;
 }
 .sertec-auth-story {
-  background: #142f2d;
-  color: #f0f7f2;
+  background: #004f8f;
+  --sf-logo-blue: #fff;
+  color: #ffffff;
   border-radius: 16px;
   padding: clamp(28px, 4vw, 60px);
   align-self: stretch;
@@ -39,7 +40,7 @@
   text-wrap: balance;
 }
 .sertec-auth-story > p {
-  color: #c6ded2;
+  color: #e2effb;
   font-size: 16px;
   line-height: 1.75;
   max-width: 33ch;
@@ -57,7 +58,7 @@
   align-items: center;
   gap: 12px;
   font-size: 13px;
-  color: #d5e8dd;
+  color: #e2effb;
 }
 .sertec-auth-form {
   min-width: 0;
@@ -76,18 +77,18 @@
   flex-wrap: wrap;
   font-size: 12px;
   line-height: 1.6;
-  color: #55675e;
+  color: #54657a;
 }
 .sertec-auth-footer a {
   text-decoration: underline;
   text-underline-offset: 4px;
 }
-.dark .sertec-auth {
-  background: #17221e;
+[data-theme*="dark"] .sertec-auth {
+  background: #101e30;
   color: #edf6ee;
 }
-.dark .sertec-auth-footer {
-  color: #bdcfc4;
+[data-theme*="dark"] .sertec-auth-footer {
+  color: #bdcde0;
 }
 @media (max-width: 800px) {
   .sertec-auth {
@@ -123,5 +124,34 @@
   .sertec-auth-footer {
     justify-content: center;
     text-align: center;
+  }
+}
+
+.sertec-auth-signature {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 42px;
+  padding-top: 24px;
+  border-top: 1px solid #ffffff30;
+  color: #e2effb;
+  font-size: 11px;
+}
+.sertec-auth-signature .sertec-logo {
+  --sf-logo-blue: #fff;
+  width: 34px;
+  height: 34px;
+}
+.sertec-auth-story li svg {
+  color: #f69139;
+  flex-shrink: 0;
+}
+@media (max-width: 800px) {
+  .sertec-auth-signature {
+    display: none;
+  }
+  .sertec-auth-header .sertec-logo {
+    width: 175px;
+    height: auto;
   }
 }

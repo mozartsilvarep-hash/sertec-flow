@@ -21,6 +21,7 @@ import { WorkspaceEditionBadge } from "@/components/workspace/edition-badge";
 import { AppSidebarToggleButton } from "./sidebar-toggle-button";
 import { IconButton } from "@makeplane/propel/components/icon-button";
 import { Icon } from "@makeplane/propel/components/icon";
+import { SertecLogo } from "@plane/blocks/icons";
 
 type TSidebarWrapperProps = {
   title: string;
@@ -54,7 +55,10 @@ export const SidebarWrapper = observer(function SidebarWrapper(props: TSidebarWr
   return (
     <>
       <CustomizeNavigationDialog isOpen={isCustomizeNavDialogOpen} onClose={() => setIsCustomizeNavDialogOpen(false)} />
-      <div ref={ref} className="flex h-full w-full animate-fade-in flex-col">
+      <div ref={ref} className="sertec-app-sidebar flex h-full w-full animate-fade-in flex-col">
+        <div className="sertec-sidebar-brand">
+          <SertecLogo width={188} height={37} />
+        </div>
         <div className="flex flex-col gap-3 px-3">
           {/* Workspace switcher and settings */}
 

@@ -6,6 +6,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { normalizeAdminAuthError, getAdminAuthErrorMessage } from "@/helpers/sertec-auth-errors";
 // icons
 import { HideOutline, ShowOutline } from "@makeplane/propel/icons";
 // plane internal packages
@@ -32,6 +33,7 @@ enum EErrorCodes {
   INVALID_EMAIL = "INVALID_EMAIL",
   INVALID_PASSWORD = "INVALID_PASSWORD",
   USER_ALREADY_EXISTS = "USER_ALREADY_EXISTS",
+  AUTHENTICATION_FAILED = "AUTHENTICATION_FAILED",
 }
 
 type TError = {
@@ -64,11 +66,11 @@ export function InstanceSetupForm() {
   const searchParams = useSearchParams();
   const firstNameParam = searchParams?.get("first_name") || undefined;
   const lastNameParam = searchParams?.get("last_name") || undefined;
-  const companyParam = searchParams?.get("company") || undefined;
+  const companyParam = searchParams?.get("company_name") || searchParams?.get("company") || undefined;
   const emailParam = searchParams?.get("email") || undefined;
-  const isTelemetryEnabledParam = (searchParams?.get("is_telemetry_enabled") === "True" ? true : false) || true;
-  const errorCode = searchParams?.get("error_code") || undefined;
-  const errorMessage = searchParams?.get("error_message") || undefined;
+  const isTelemetryEnabledParam = searchParams?.get("is_telemetry_enabled");
+  const errorCode = normalizeAdminAuthError(searchParams?.get("error_code"));
+  const errorMessage = errorCode ? getAdminAuthErrorMessage(errorCode) : undefined;
   // state
   const [showPassword, setShowPassword] = useState({
     password: false,
@@ -96,7 +98,8 @@ export function InstanceSetupForm() {
     if (lastNameParam) setFormData((prev) => ({ ...prev, last_name: lastNameParam }));
     if (companyParam) setFormData((prev) => ({ ...prev, company_name: companyParam }));
     if (emailParam) setFormData((prev) => ({ ...prev, email: emailParam }));
-    if (isTelemetryEnabledParam) setFormData((prev) => ({ ...prev, is_telemetry_enabled: isTelemetryEnabledParam }));
+    if (isTelemetryEnabledParam != null)
+      setFormData((prev) => ({ ...prev, is_telemetry_enabled: isTelemetryEnabledParam === "True" }));
   }, [firstNameParam, lastNameParam, companyParam, emailParam, isTelemetryEnabledParam]);
 
   // derived values
@@ -116,7 +119,7 @@ export function InstanceSetupForm() {
         case EErrorCodes.USER_ALREADY_EXISTS:
           return { type: EErrorCodes.USER_ALREADY_EXISTS, message: errorMessage };
         default:
-          return { type: undefined, message: undefined };
+          return { type: EErrorCodes.AUTHENTICATION_FAILED, message: errorMessage };
       }
     } else return { type: undefined, message: undefined };
   }, [errorCode, errorMessage]);
@@ -144,8 +147,8 @@ export function InstanceSetupForm() {
       <div className="mt-10 flex w-full flex-grow flex-col items-center justify-center py-6">
         <div className="relative flex w-full max-w-[22.5rem] flex-col gap-6">
           <FormHeader
-            heading="Setup your Plane Instance"
-            subHeading="Post setup you will be able to manage this Plane instance."
+            heading="Configure seu SerTec Flow"
+            subHeading="Configure sua instalação para administrar o SerTec Flow."
           />
           {errorData.type &&
             errorData?.message &&
@@ -165,7 +168,7 @@ export function InstanceSetupForm() {
             <div className="flex flex-col items-center gap-4 sm:flex-row">
               <div className="w-full space-y-1">
                 <label className="text-13 font-medium text-tertiary" htmlFor="first_name">
-                  First name <span className="text-danger-primary">*</span>
+                  Nome <span className="text-danger-primary">*</span>
                 </label>
                 <InputGroup size="lg">
                   <Input
@@ -182,14 +185,13 @@ export function InstanceSetupForm() {
                       }
                     }}
                     autoComplete="off"
-                    autoFocus
                     maxLength={50}
                   />
                 </InputGroup>
               </div>
               <div className="w-full space-y-1">
                 <label className="text-13 font-medium text-tertiary" htmlFor="last_name">
-                  Last name <span className="text-danger-primary">*</span>
+                  Sobrenome <span className="text-danger-primary">*</span>
                 </label>
                 <InputGroup size="lg">
                   <Input
@@ -214,7 +216,7 @@ export function InstanceSetupForm() {
 
             <div className="w-full space-y-1">
               <label className="text-13 font-medium text-tertiary" htmlFor="email">
-                Email <span className="text-danger-primary">*</span>
+                E-mail <span className="text-danger-primary">*</span>
               </label>
               <InputGroup size="lg">
                 <Input
@@ -236,7 +238,7 @@ export function InstanceSetupForm() {
 
             <div className="w-full space-y-1">
               <label className="text-13 font-medium text-tertiary" htmlFor="company_name">
-                Company name <span className="text-danger-primary">*</span>
+                Nome da empresa <span className="text-danger-primary">*</span>
               </label>
               <InputGroup size="lg">
                 <Input
@@ -244,7 +246,7 @@ export function InstanceSetupForm() {
                   id="company_name"
                   name="company_name"
                   type="text"
-                  placeholder="Company name"
+                  placeholder="Nome da empresa"
                   value={formData.company_name}
                   onChange={(e) => {
                     const validation = validateCompanyName(e.target.value, false);
@@ -259,7 +261,7 @@ export function InstanceSetupForm() {
 
             <div className="w-full space-y-1">
               <label className="text-13 font-medium text-tertiary" htmlFor="password">
-                Set a password <span className="text-danger-primary">*</span>
+                Crie uma senha <span className="text-danger-primary">*</span>
               </label>
               <InputGroup size="lg">
                 <Input
@@ -267,7 +269,7 @@ export function InstanceSetupForm() {
                   id="password"
                   name="password"
                   type={showPassword.password ? "text" : "password"}
-                  placeholder="New password"
+                  placeholder="Nova senha"
                   value={formData.password}
                   onChange={(e) => handleFormChange("password", e.target.value)}
                   aria-invalid={errorData.type && errorData.type === EErrorCodes.INVALID_PASSWORD ? true : false}
@@ -278,7 +280,7 @@ export function InstanceSetupForm() {
                 {showPassword.password ? (
                   <button
                     type="button"
-                    aria-label="Hide password"
+                    aria-label="Ocultar senha"
                     className="flex items-center justify-center text-placeholder"
                     onClick={() => handleShowPassword("password")}
                   >
@@ -287,7 +289,7 @@ export function InstanceSetupForm() {
                 ) : (
                   <button
                     type="button"
-                    aria-label="Show password"
+                    aria-label="Mostrar senha"
                     className="flex items-center justify-center text-placeholder"
                     onClick={() => handleShowPassword("password")}
                   >
@@ -303,7 +305,7 @@ export function InstanceSetupForm() {
 
             <div className="w-full space-y-1">
               <label className="text-13 font-medium text-tertiary" htmlFor="confirm_password">
-                Confirm password <span className="text-danger-primary">*</span>
+                Confirme a senha <span className="text-danger-primary">*</span>
               </label>
               <InputGroup size="lg">
                 <Input
@@ -313,7 +315,7 @@ export function InstanceSetupForm() {
                   name="confirm_password"
                   value={formData.confirm_password}
                   onChange={(e) => handleFormChange("confirm_password", e.target.value)}
-                  placeholder="Confirm password"
+                  placeholder="Confirme a senha"
                   onFocus={() => setIsRetryPasswordInputFocused(true)}
                   onBlur={() => setIsRetryPasswordInputFocused(false)}
                   autoComplete="new-password"
@@ -321,7 +323,7 @@ export function InstanceSetupForm() {
                 {showPassword.retypePassword ? (
                   <button
                     type="button"
-                    aria-label="Hide password"
+                    aria-label="Ocultar senha"
                     className="flex items-center justify-center text-placeholder"
                     onClick={() => handleShowPassword("retypePassword")}
                   >
@@ -330,7 +332,7 @@ export function InstanceSetupForm() {
                 ) : (
                   <button
                     type="button"
-                    aria-label="Show password"
+                    aria-label="Mostrar senha"
                     className="flex items-center justify-center text-placeholder"
                     onClick={() => handleShowPassword("retypePassword")}
                   >
@@ -349,20 +351,20 @@ export function InstanceSetupForm() {
               <div>
                 <Checkbox
                   id="is_telemetry_enabled"
-                  aria-label="Allow Plane to anonymously collect usage events"
+                  aria-label="Permitir o envio de eventos de uso anônimos ao projeto SerTec Flow"
                   onCheckedChange={(checked) => handleFormChange("is_telemetry_enabled", checked)}
                   checked={formData.is_telemetry_enabled}
                 />
               </div>
               <label className="cursor-pointer text-13 font-medium text-tertiary" htmlFor="is_telemetry_enabled">
-                Allow Plane to anonymously collect usage events.{" "}
+                Permitir o envio de eventos de uso anônimos ao projeto SerTec Flow.{" "}
                 <a
                   href="https://developers.plane.so/self-hosting/telemetry"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-500 hover:text-blue-600 flex-shrink-0 text-13 font-medium"
                 >
-                  See More
+                  Saiba mais
                 </a>
               </label>
             </div>
@@ -375,7 +377,7 @@ export function InstanceSetupForm() {
                 stretch="full"
                 disabled={isButtonDisabled}
                 loading={isSubmitting}
-                label="Continue"
+                label="Continuar"
               />
             </div>
           </form>

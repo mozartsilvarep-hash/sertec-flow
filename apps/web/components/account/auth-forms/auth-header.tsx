@@ -27,29 +27,29 @@ type TAuthHeader = {
 const Titles = {
   [EAuthModes.SIGN_IN]: {
     [EAuthSteps.EMAIL]: {
-      header: "Bem-vindo ao Sertec Flow.",
+      header: "Bem-vindo ao SerTec Flow.",
       subHeader: "Entre para continuar seu trabalho.",
     },
     [EAuthSteps.PASSWORD]: {
-      header: "Bem-vindo ao Sertec Flow.",
+      header: "Bem-vindo ao SerTec Flow.",
       subHeader: "Entre para continuar seu trabalho.",
     },
     [EAuthSteps.UNIQUE_CODE]: {
-      header: "Bem-vindo ao Sertec Flow.",
+      header: "Bem-vindo ao SerTec Flow.",
       subHeader: "Entre para continuar seu trabalho.",
     },
   },
   [EAuthModes.SIGN_UP]: {
     [EAuthSteps.EMAIL]: {
-      header: "Bem-vindo ao Sertec Flow.",
+      header: "Bem-vindo ao SerTec Flow.",
       subHeader: "Crie sua conta para escolher um plano.",
     },
     [EAuthSteps.PASSWORD]: {
-      header: "Bem-vindo ao Sertec Flow.",
+      header: "Bem-vindo ao SerTec Flow.",
       subHeader: "Crie sua conta para escolher um plano.",
     },
     [EAuthSteps.UNIQUE_CODE]: {
-      header: "Bem-vindo ao Sertec Flow.",
+      header: "Bem-vindo ao SerTec Flow.",
       subHeader: "Crie sua conta para escolher um plano.",
     },
   },

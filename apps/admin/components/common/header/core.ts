@@ -5,10 +5,10 @@
  */
 
 export const CORE_HEADER_SEGMENT_LABELS: Record<string, string> = {
-  general: "General",
+  general: "Geral",
   ai: "Artificial Intelligence",
-  email: "Email",
-  authentication: "Authentication",
+  email: "E-mail",
+  authentication: "Autenticação",
   image: "Image",
   google: "Google",
   github: "GitHub",

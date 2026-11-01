@@ -24,7 +24,7 @@ Plano Individual mensal: R$ 39,90. Plano Individual anual: R$ 399,90. Cada assin
 
 ## Brand Commitments
 
-Nome Sertec Flow. Interface comercial em português brasileiro. Preservar avisos de licença e atribuição do código original.
+Nome SerTec Flow. Identidade oficial do kit SerTec-Flow-Marca (azul e laranja, logo fornecido, fontes Outfit e Montserrat). Interface comercial em português brasileiro. Preservar avisos de licença e atribuição do código original.
 
 ## Open Decisions
 

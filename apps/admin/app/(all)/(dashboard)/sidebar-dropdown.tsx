@@ -97,7 +97,7 @@ export const AdminSidebarDropdown = observer(function AdminSidebarDropdown() {
               render={
                 <button
                   type="button"
-                  aria-label="Instance admin menu"
+                  aria-label="Menu da administração"
                   className={cn("grid flex-shrink-0 place-items-center outline-none", {
                     "cursor-default": !isSidebarCollapsed,
                   })}
@@ -113,7 +113,7 @@ export const AdminSidebarDropdown = observer(function AdminSidebarDropdown() {
 
           {!isSidebarCollapsed && (
             <div className="flex w-full gap-2">
-              <h4 className="grow truncate text-body-md-medium text-primary">Instance admin</h4>
+              <h4 className="grow truncate text-body-md-medium text-primary">Administração</h4>
             </div>
           )}
         </div>

@@ -57,21 +57,21 @@ export const GeneralConfigurationForm = observer(function GeneralConfigurationFo
   return (
     <div className="space-y-8">
       <div className="space-y-4">
-        <div className="text-16 font-medium text-primary">Instance details</div>
+        <div className="text-16 font-medium text-primary">Detalhes da instalação</div>
         <div className="grid-col grid w-full grid-cols-1 items-center justify-between gap-8 md:grid-cols-2 lg:grid-cols-3">
           <ControllerInput
             key="instance_name"
             name="instance_name"
             control={control}
             type="text"
-            label="Name of instance"
+            label="Nome da instalação"
             placeholder="Instance name"
             error={Boolean(errors.instance_name)}
             required
           />
 
           <div className="flex flex-col gap-1">
-            <h4 className="text-13 text-tertiary">Email</h4>
+            <h4 className="text-13 text-tertiary">E-mail</h4>
             <div className="w-full">
               <InputGroup size="lg">
                 <Input
@@ -89,7 +89,7 @@ export const GeneralConfigurationForm = observer(function GeneralConfigurationFo
           </div>
 
           <div className="flex flex-col gap-1">
-            <h4 className="text-13 text-tertiary">Instance ID</h4>
+            <h4 className="text-13 text-tertiary">ID da instalação</h4>
             <div className="w-full">
               <InputGroup size="lg">
                 <Input
@@ -107,7 +107,7 @@ export const GeneralConfigurationForm = observer(function GeneralConfigurationFo
       </div>
 
       <div className="space-y-6">
-        <div className="border-b border-subtle pb-1.5 text-16 font-medium text-primary">Telemetry</div>
+        <div className="border-b border-subtle pb-1.5 text-16 font-medium text-primary">Telemetria</div>
         <div className="flex items-center gap-14">
           <div className="flex grow items-center gap-4">
             <div className="shrink-0">
@@ -116,7 +116,9 @@ export const GeneralConfigurationForm = observer(function GeneralConfigurationFo
               </div>
             </div>
             <div className="grow">
-              <div className="text-13 leading-5 font-medium text-primary">Let Plane collect anonymous usage data</div>
+              <div className="text-13 leading-5 font-medium text-primary">
+                Compartilhar dados de uso anônimos com o projeto Plane
+              </div>
               <div className="text-11 leading-5 font-regular text-tertiary">
                 No PII is collected.This anonymized data is used to understand how you use Plane and build new features
                 in line with{" "}
@@ -137,7 +139,7 @@ export const GeneralConfigurationForm = observer(function GeneralConfigurationFo
               name="is_telemetry_enabled"
               render={({ field: { value, onChange } }) => (
                 <Switch
-                  aria-label="Let Plane collect anonymous usage data"
+                  aria-label="Compartilhar dados de uso anônimos com o projeto Plane"
                   checked={value ?? false}
                   onCheckedChange={onChange}
                   size="sm"
@@ -158,7 +160,7 @@ export const GeneralConfigurationForm = observer(function GeneralConfigurationFo
             void handleSubmit(onSubmit)();
           }}
           loading={isSubmitting}
-          label={isSubmitting ? "Saving" : "Save changes"}
+          label={isSubmitting ? "Saving" : "Salvar alterações"}
         />
       </div>
     </div>

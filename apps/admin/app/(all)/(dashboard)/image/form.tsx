@@ -83,7 +83,7 @@ export function InstanceImageConfigForm(props: IInstanceImageConfigForm) {
           stretch="auto"
           onClick={handleSubmit(onSubmit)}
           loading={isSubmitting}
-          label={isSubmitting ? "Saving" : "Save changes"}
+          label={isSubmitting ? "Saving" : "Salvar alterações"}
         />
       </div>
     </div>

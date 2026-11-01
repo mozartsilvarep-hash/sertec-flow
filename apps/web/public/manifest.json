@@ -1,27 +1,23 @@
 {
-  "name": "Plane",
-  "short_name": "Plane",
+  "name": "SerTec Flow",
+  "short_name": "SerTec Flow",
   "icons": [
     {
-      "src": "/icons/icon-192x192.png",
+      "src": "./brand/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/icons/icon-348x348.png",
-      "sizes": "348x348",
       "type": "image/png"
     },
     {
-      "src": "/icons/icon-512x512.png",
+      "src": "./brand/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
   ],
-  "theme_color": "#FFFFFF",
+  "theme_color": "#005BA8",
   "background_color": "#FFFFFF",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
-  "orientation": "portrait"
+  "orientation": "portrait",
+  "lang": "pt-BR",
+  "scope": "./"
 }
