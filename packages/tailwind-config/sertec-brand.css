@@ -133,3 +133,39 @@ h6 {
     animation: none;
   }
 }
+
+/* Explicit foregrounds survive the UI library's semantic text utilities. */
+.sertec-admin-nav a,
+.sertec-admin-nav .text-primary,
+.sertec-admin-nav .text-secondary,
+.sertec-admin-title {
+  color: #fff !important;
+}
+.sertec-admin-nav [class*="text-caption"] {
+  color: #dbe9f6;
+}
+.sertec-admin-nav a:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.sertec-commerce-nav {
+  display: grid;
+  gap: 4px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #ffffff40;
+  margin-bottom: 8px;
+}
+.sertec-commerce-nav a {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.sertec-commerce-nav a:hover {
+  background: #ffffff20;
+}
+.sertec-admin-nav a[aria-current="page"] {
+  background: #ffffff20;
+}

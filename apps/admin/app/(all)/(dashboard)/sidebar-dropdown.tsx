@@ -113,7 +113,7 @@ export const AdminSidebarDropdown = observer(function AdminSidebarDropdown() {
 
           {!isSidebarCollapsed && (
             <div className="flex w-full gap-2">
-              <h4 className="grow truncate text-body-md-medium text-primary">Administração</h4>
+              <h4 className="sertec-admin-title grow truncate text-body-md-medium text-primary">Administração</h4>
             </div>
           )}
         </div>

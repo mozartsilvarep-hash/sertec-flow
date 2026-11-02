@@ -1,0 +1,116 @@
+.sertec-plans {
+  height: 100%;
+  overflow: auto;
+  background: #f8fafc;
+  color: #403f41;
+  padding: 32px max(24px, calc((100% - 1120px) / 2));
+  font-family: Montserrat, sans-serif;
+}
+.sertec-plans header,
+.sertec-plans footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.sertec-plans a {
+  color: #005ba8;
+  text-underline-offset: 4px;
+}
+.plans-intro {
+  padding: 72px 0 40px;
+  max-width: 740px;
+}
+.plans-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: #005ba8;
+  font-weight: 700;
+}
+.plans-intro h1 {
+  font-size: clamp(34px, 5vw, 60px);
+  line-height: 1.1;
+  margin: 16px 0 24px;
+}
+.plans-intro > p:last-child,
+.plans-payment p {
+  line-height: 1.7;
+  max-width: 650px;
+}
+.plans-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+.plans-options article {
+  background: white;
+  border: 1px solid #c6d8e8;
+  border-top: 4px solid #005ba8;
+  padding: 32px;
+  border-radius: 8px;
+}
+.plans-options h2 {
+  font-size: 28px;
+  margin: 8px 0;
+}
+.plans-price {
+  font-size: 40px;
+  font-family: Outfit, sans-serif;
+  margin: 24px 0;
+}
+.plans-price span {
+  font-family: Montserrat, sans-serif;
+  font-size: 14px;
+  margin-left: 12px;
+}
+.plans-options ul {
+  padding-left: 20px;
+  line-height: 2;
+  margin: 24px 0;
+}
+.sertec-plans .plans-cta {
+  display: block;
+  background: #005ba8;
+  color: white;
+  padding: 14px;
+  text-align: center;
+  border-radius: 6px;
+  font-weight: 600;
+}
+.plans-payment {
+  padding: 48px 0;
+}
+.plans-payment h2 {
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+.plans-payment a {
+  display: inline-block;
+  margin-top: 16px;
+}
+.sertec-plans footer {
+  border-top: 1px solid #c6d8e8;
+  padding: 24px 0;
+  font-size: 12px;
+}
+.sertec-plans a:focus-visible {
+  outline: 2px solid #005ba8;
+  outline-offset: 4px;
+}
+@media (max-width: 650px) {
+  .plans-options {
+    grid-template-columns: 1fr;
+  }
+  .sertec-plans header {
+    flex-wrap: wrap;
+  }
+  .plans-intro {
+    padding-top: 40px;
+  }
+  .plans-options article {
+    padding: 24px;
+  }
+  .sertec-plans footer {
+    flex-wrap: wrap;
+  }
+}

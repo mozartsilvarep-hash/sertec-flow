@@ -8,7 +8,7 @@ export function AuthFooter() {
   return (
     <footer className="sertec-auth-footer">
       <span>SerTec Flow · Organização para o seu dia a dia.</span>
-      <Link href="/assinatura/">Planos e minha assinatura</Link>
+      <Link href="/planos/">Conheça os planos</Link>
       <a
         href="https://github.com/mozartsilvarep-hash/sertec-flow"
         target="_blank"

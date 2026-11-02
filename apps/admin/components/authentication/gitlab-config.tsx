@@ -33,7 +33,7 @@ export const GitlabConfiguration = observer(function GitlabConfiguration(props: 
     <>
       {isGitlabConfigured ? (
         <div className="flex items-center gap-4">
-          <AnchorButton variant="primary" size="sm" render={<Link href="/authentication/gitlab" />} label="Edit" />
+          <AnchorButton variant="primary" size="sm" render={<Link href="/authentication/gitlab" />} label="Editar" />
           <Switch
             checked={Boolean(parseInt(enableGitlabConfig))}
             onCheckedChange={() => {
@@ -53,7 +53,7 @@ export const GitlabConfiguration = observer(function GitlabConfiguration(props: 
           nativeButton={false}
           render={<Link href="/authentication/gitlab" />}
           icon={<SettingsOutline className="h-4 w-4 p-0.5 text-tertiary" />}
-          label="Configure"
+          label="Configurar"
         />
       )}
     </>

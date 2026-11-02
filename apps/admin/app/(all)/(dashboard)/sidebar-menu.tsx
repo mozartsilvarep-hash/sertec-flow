@@ -29,7 +29,18 @@ export const AdminSidebarMenu = observer(function AdminSidebarMenu() {
   };
 
   return (
-    <div className="vertical-scrollbar scrollbar-sm flex h-full w-full flex-col gap-2.5 overflow-y-scroll px-4 py-4">
+    <div className="sertec-admin-nav vertical-scrollbar scrollbar-sm flex h-full w-full flex-col gap-2.5 overflow-y-scroll px-4 py-4">
+      <div className="sertec-commerce-nav">
+        <a href="/planos/" title="Planos">
+          {isSidebarCollapsed ? "R$" : "Planos e preços"}
+        </a>
+        <a href="/assinatura/" title="Minha assinatura">
+          {isSidebarCollapsed ? "↗" : "Minha assinatura"}
+        </a>
+        <a href="/vendas/" title="Vendas e assinantes">
+          {isSidebarCollapsed ? "$" : "Vendas e assinantes"}
+        </a>
+      </div>
       {sidebarMenu.map((item) => {
         const isActive = item.href === pathName || pathName?.startsWith(item.href);
         return (
