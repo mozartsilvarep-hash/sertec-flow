@@ -155,3 +155,18 @@
     height: auto;
   }
 }
+
+.sertec-auth-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+@media (max-width: 600px) {
+  .sertec-auth-actions {
+    gap: 12px;
+    font-size: 12px;
+  }
+  .sertec-auth-header .sertec-logo {
+    width: 145px;
+  }
+}

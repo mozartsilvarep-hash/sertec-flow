@@ -8,6 +8,7 @@ import { route } from "@react-router/dev/routes";
 import type { RouteConfigEntry } from "@react-router/dev/routes";
 
 export const extendedRoutes: RouteConfigEntry[] = [
+  route("planos", "./routes/sertec/plans.tsx"),
   route("assinatura", "./routes/sertec/account.tsx"),
   route("vendas", "./routes/sertec/sales.tsx"),
 ];

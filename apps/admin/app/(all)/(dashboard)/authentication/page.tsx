@@ -56,9 +56,8 @@ const InstanceAuthenticationPage = observer(function InstanceAuthenticationPage(
           if (!canDisable) {
             setToast({
               type: "error",
-              title: "Cannot disable authentication",
-              message:
-                "At least one authentication method must remain enabled. Please enable another method before disabling this one.",
+              title: "Mantenha uma forma de acesso ativa",
+              message: "Ative outra forma de acesso antes de desativar esta.",
             });
             return;
           }
@@ -75,14 +74,14 @@ const InstanceAuthenticationPage = observer(function InstanceAuthenticationPage(
       const updateConfigPromise = updateInstanceConfigurations(payload);
 
       setPromiseToast(updateConfigPromise, {
-        loading: "Saving configuration",
+        loading: "Salvando configuração",
         success: {
-          title: "Success",
-          message: () => "Configuration saved successfully",
+          title: "Concluído",
+          message: () => "Configuração salva",
         },
         error: {
-          title: "Error",
-          message: () => "Failed to save configuration",
+          title: "Erro",
+          message: () => "Não foi possível salvar a configuração",
         },
       });
 
@@ -114,8 +113,8 @@ const InstanceAuthenticationPage = observer(function InstanceAuthenticationPage(
   return (
     <PageWrapper
       header={{
-        title: "Manage authentication modes for your instance",
-        description: "Configure authentication modes for your team and restrict sign-ups to be invite only.",
+        title: "Acesso e cadastro",
+        description: "Escolha como seus clientes entram no SerTec Flow e quem pode criar uma conta.",
       }}
     >
       {formattedConfig ? (
@@ -123,16 +122,16 @@ const InstanceAuthenticationPage = observer(function InstanceAuthenticationPage(
           <div className={cn("flex w-full items-center gap-14 rounded-sm")}>
             <div className="flex grow items-center gap-4">
               <div className="grow">
-                <div className="pb-1 text-16 font-medium">Allow anyone to sign up even without an invite</div>
+                <div className="pb-1 text-16 font-medium">Permitir novos cadastros</div>
                 <div className={cn("text-11 leading-5 font-regular text-tertiary")}>
-                  Toggling this off will only let users sign up when they are invited.
+                  Quando desativado, somente pessoas convidadas podem criar uma conta.
                 </div>
               </div>
             </div>
             <div className={`shrink-0 pr-4 ${isSubmitting && "opacity-70"}`}>
               <div className="flex items-center gap-4">
                 <Switch
-                  aria-label="Allow anyone to sign up even without an invite"
+                  aria-label="Permitir novos cadastros"
                   checked={Boolean(parseInt(enableSignUpConfig))}
                   onCheckedChange={() => {
                     if (Boolean(parseInt(enableSignUpConfig)) === true) {
@@ -147,7 +146,7 @@ const InstanceAuthenticationPage = observer(function InstanceAuthenticationPage(
               </div>
             </div>
           </div>
-          <div className="text-lg pt-6 font-medium">Available authentication modes</div>
+          <div className="text-lg pt-6 font-medium">Formas de entrar</div>
           {authenticationModes.map((method) => (
             <AuthenticationMethodCard
               key={method.key}

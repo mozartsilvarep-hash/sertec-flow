@@ -73,7 +73,10 @@ export function AuthHeaderBase(props: TAuthHeaderBase) {
         <Link href="/">
           <SertecLogo width={210} height={42} />
         </Link>
-        {additionalAction}
+        <div className="sertec-auth-actions">
+          <Link href="/planos/">Planos</Link>
+          {additionalAction}
+        </div>
       </div>
     </>
   );
