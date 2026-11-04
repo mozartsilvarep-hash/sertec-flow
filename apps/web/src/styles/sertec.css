@@ -1,0 +1,344 @@
+@font-face {
+  font-family: Montserrat;
+  src: url("/fonts/Montserrat.ttf") format("truetype");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: Outfit;
+  src: url("/fonts/Outfit.ttf") format("truetype");
+  font-weight: 100 900;
+  font-display: swap;
+}
+:root {
+  --sf-blue: #005ba8;
+  --sf-ink: #17334a;
+  --sf-paper: #f6f8fa;
+}
+::selection {
+  background: #cce6fa;
+  color: #17334a;
+}
+:focus-visible {
+  outline: 2px solid #005ba8 !important;
+  outline-offset: 4px;
+}
+input,
+textarea {
+  caret-color: #005ba8;
+}
+.sf-logo {
+  width: 196px;
+  height: auto;
+}
+.sf-public,
+.sf-auth {
+  background: var(--sf-paper);
+  color: var(--sf-ink);
+  min-height: 100svh;
+  font-family: Montserrat, sans-serif;
+}
+.sf-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 28px clamp(20px, 5vw, 80px);
+}
+.sf-header nav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+.sf-header a,
+.sf-footer a {
+  font-weight: 600;
+  text-underline-offset: 5px;
+}
+.sf-header a:hover,
+.sf-footer a:hover {
+  text-decoration: underline;
+}
+.sf-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 24px;
+  min-height: 48px;
+  background: #005ba8;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none !important;
+}
+.sf-button:hover {
+  background: #004f8f;
+}
+.sf-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 30px clamp(20px, 5vw, 80px);
+  font-size: 12px;
+}
+.sf-home {
+  max-width: 1440px;
+  margin: auto;
+  padding: 64px clamp(20px, 5vw, 80px);
+}
+.sf-home > section:first-child {
+  max-width: 770px;
+  margin-bottom: 55px;
+}
+.sf-home h1,
+.sf-story h1,
+.sf-plans h1 {
+  font-family: Outfit, sans-serif;
+  font-weight: 600;
+  font-size: clamp(36px, 5vw, 64px);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+.sf-home > section > p,
+.sf-plans > p {
+  font-size: 17px;
+  line-height: 1.8;
+  max-width: 65ch;
+  margin: 24px 0;
+}
+.sf-demo {
+  background: #e6edf3;
+  padding: 28px;
+  border-radius: 16px;
+}
+.sf-demo > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.sf-demo h2 {
+  font-family: Outfit, sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+}
+.sf-demo header span {
+  font-size: 12px;
+}
+.sf-columns {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+.sf-columns h3 {
+  font-weight: 600;
+  margin: 0 0 16px;
+}
+.sf-columns article {
+  background: white;
+  border-radius: 12px;
+  padding: 22px;
+  margin-bottom: 12px;
+}
+.sf-columns h4 {
+  font-weight: 600;
+  margin: 10px 0;
+}
+.sf-columns small {
+  background: #ffead8;
+  color: #723909;
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+.sf-columns p {
+  color: #506474;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.sf-auth-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 1440px;
+  margin: auto;
+  min-height: calc(100svh - 180px);
+  padding: 24px clamp(20px, 5vw, 80px);
+  gap: clamp(40px, 7vw, 112px);
+  align-items: center;
+}
+.sf-story {
+  background: #004f8f;
+  color: white;
+  border-radius: 16px;
+  padding: clamp(30px, 4vw, 64px);
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.sf-story h1 {
+  font-size: clamp(40px, 4vw, 60px);
+}
+.sf-story > p {
+  margin-top: 24px;
+  line-height: 1.8;
+  color: #e0edf8;
+}
+.sf-workflow {
+  margin: 48px 0;
+  padding: 0;
+  list-style: none;
+}
+.sf-workflow li {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 15px 0;
+  border-bottom: 1px solid #477eab;
+}
+.sf-workflow li:before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #f69139;
+}
+.sf-story .sf-signature {
+  font-size: 12px;
+  margin-top: auto;
+}
+.sf-auth-form {
+  padding: 32px 0;
+  max-width: 440px;
+  width: 100%;
+  justify-self: center;
+}
+.sf-auth-form input {
+  min-height: 46px;
+}
+.sf-auth-form .text-3xl {
+  font-family: Outfit, sans-serif;
+}
+.sf-plans {
+  max-width: 1100px;
+  margin: auto;
+  padding: 64px 24px 100px;
+}
+.sf-plan-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 42px 0;
+}
+.sf-plan-grid section {
+  border: 1px solid #c7d4df;
+  border-radius: 16px;
+  padding: 36px;
+}
+.sf-plan-grid h2 {
+  font-family: Outfit, sans-serif;
+  font-size: 28px;
+}
+.sf-price {
+  font-family: Outfit, sans-serif;
+  font-size: 40px;
+  margin: 24px 0;
+}
+.sf-price small {
+  font-family: Montserrat, sans-serif;
+  font-size: 14px;
+}
+.sf-text-link {
+  color: #005ba8;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.dark .sf-public,
+.dark .sf-auth {
+  --sf-paper: #111d28;
+  --sf-ink: #ecf4fa;
+}
+.dark .sf-logo {
+  background: white;
+  border-radius: 6px;
+  padding: 6px;
+}
+.dark .sf-demo {
+  background: #213547;
+}
+.dark .sf-columns article {
+  background: #142635;
+}
+.dark .sf-columns p {
+  color: #c5d6e4;
+}
+.dark .sf-text-link {
+  color: #8fcfff;
+}
+.dark :focus-visible {
+  outline-color: #8fcfff !important;
+}
+@media (max-width: 760px) {
+  .sf-header {
+    padding: 22px 20px;
+  }
+  .sf-logo {
+    width: 155px;
+  }
+  .sf-header nav {
+    gap: 16px;
+  }
+  .sf-auth-grid {
+    grid-template-columns: 1fr;
+    padding: 12px 24px 40px;
+    gap: 28px;
+  }
+  .sf-story {
+    padding: 28px;
+  }
+  .sf-story h1 {
+    font-size: 36px;
+  }
+  .sf-workflow,
+  .sf-story .sf-signature {
+    display: none;
+  }
+  .sf-auth-form {
+    padding: 10px 0;
+  }
+  .sf-home {
+    padding-top: 30px;
+  }
+  .sf-columns {
+    grid-template-columns: 1fr;
+  }
+  .sf-demo {
+    padding: 20px;
+  }
+  .sf-demo > header {
+    align-items: start;
+    flex-direction: column;
+  }
+  .sf-footer {
+    flex-direction: column;
+    padding: 24px;
+    gap: 14px;
+  }
+  .sf-plan-grid {
+    grid-template-columns: 1fr;
+  }
+  .sf-plans {
+    padding-top: 36px;
+  }
+  .sf-plan-grid section {
+    padding: 26px;
+  }
+}
+
+h1,
+h2,
+h3 {
+  font-family: Outfit, sans-serif;
+}

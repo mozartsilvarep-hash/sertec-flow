@@ -1,43 +1,63 @@
 {
-  "name": "plane",
-  "version": "1.5.0",
+  "name": "kan",
   "private": true,
-  "description": "Open-source project management that unlocks customer value",
-  "license": "AGPL-3.0",
-  "repository": "https://github.com/makeplane/plane.git",
+  "engines": {
+    "node": ">=20.18.1",
+    "pnpm": "^9.14.2"
+  },
+  "packageManager": "pnpm@9.14.2",
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev --concurrency=18",
-    "start": "turbo run start",
-    "clean": "turbo run clean && rm -rf .turbo && rm -rf .next && rm -rf node_modules && rm -rf dist",
-    "fix": "turbo run fix",
-    "fix:format": "turbo run fix:format",
-    "fix:lint": "turbo run fix:lint",
-    "check": "turbo run check",
-    "check:lint": "turbo run check:lint",
-    "check:format": "turbo run check:format",
-    "check:types": "turbo run check:types",
-    "prepare": "husky",
-    "doctor": "npx react-doctor@latest"
+    "clean": "git clean -xdf node_modules",
+    "clean:workspaces": "turbo run clean",
+    "db:migrate": "cd packages/db && pnpm migrate",
+    "db:push": "turbo -F @kan/db push",
+    "db:studio": "turbo -F @kan/db studio",
+    "dev": "turbo watch dev --continue",
+    "dev:next": "turbo watch dev -F @kan/web...",
+    "format": "turbo run format --continue -- --cache --cache-location .cache/.prettiercache",
+    "format:fix": "turbo run format --continue -- --write --cache --cache-location .cache/.prettiercache",
+    "lint": "turbo run lint --continue -- --cache --cache-location .cache/.eslintcache",
+    "lint:fix": "turbo run lint --continue -- --fix --cache --cache-location .cache/.eslintcache",
+    "lint:ws": "pnpm dlx sherif@latest",
+    "postinstall": "pnpm lint:ws",
+    "test": "pnpm --filter=\"!@kan/e2e\" -r --if-present test",
+    "test:e2e": "pnpm --filter @kan/e2e test",
+    "test:e2e:cloud": "pnpm --filter @kan/e2e test:cloud",
+    "test:e2e:self-hosted": "pnpm --filter @kan/e2e test:self-hosted",
+    "test:e2e:ui": "pnpm --filter @kan/e2e test:ui",
+    "test:e2e:ui:cloud": "pnpm --filter @kan/e2e test:ui:cloud",
+    "typecheck": "turbo run typecheck",
+    "ui-add": "turbo run ui-add"
   },
   "devDependencies": {
-    "husky": "catalog:",
-    "lint-staged": "catalog:",
-    "oxfmt": "catalog:",
-    "oxlint": "catalog:",
-    "react-doctor": "^0.4.2",
-    "turbo": "catalog:"
+    "@kan/prettier-config": "workspace:*",
+    "@turbo/gen": "^2.3.1",
+    "prettier": "catalog:",
+    "turbo": "^2.3.1",
+    "typescript": "catalog:"
   },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx,cjs,mjs,cts,mts,json,css,md}": [
-      "pnpm exec oxfmt --no-error-on-unmatched-pattern"
-    ],
-    "*.{js,jsx,ts,tsx,cjs,mjs,cts,mts}": [
-      "pnpm exec oxlint --fix --deny-warnings"
-    ]
-  },
-  "engines": {
-    "node": ">=22.22.0"
-  },
-  "packageManager": "pnpm@11.10.0+sha512.0b7f8b98060031904c017e3a41eb187a16d40eeb829b95c4f8cb03681761fc4ab53dd219115b9b447f4dce1a05a214764461e7d3703392a9f32f9511ce8c86c8"
+  "prettier": "@kan/prettier-config",
+  "pnpm": {
+    "supportedArchitectures": {
+      "os": [
+        "linux",
+        "current"
+      ],
+      "cpu": [
+        "x64",
+        "arm64",
+        "current"
+      ],
+      "libc": [
+        "glibc",
+        "musl",
+        "current"
+      ]
+    },
+    "overrides": {
+      "@types/minimatch": "npm:minimatch@*",
+      "@types/glob": "npm:@types/glob@^8.1.0"
+    }
+  }
 }

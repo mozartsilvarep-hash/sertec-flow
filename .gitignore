@@ -1,122 +1,66 @@
-node_modules
-.next
-.yarn
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-### NextJS ###
-# Dependencies
-/node_modules
-/.pnp
+# dependencies
+node_modules
+.pnp
 .pnp.js
 
-# Testing
-/coverage
+# testing
+coverage
 
-# Next.js
-/.next/
-/out/
+# playwright
+/packages/e2e/playwright-report/
+/packages/e2e/test-results/
+/packages/e2e/blob-report/
 
-# Production
-dist/
+# next.js
+.next/
 out/
-build/
-.react-router/
+next-env.d.ts
 
-# Misc
+# nitro
+.nitro/
+.output/
+
+# production
+build
+
+# misc
 .DS_Store
 *.pem
-.history
-tsconfig.tsbuildinfo
 
-# Debug
+# debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
 .pnpm-debug.log*
 
-# Local env files
+# local env files
 .env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env*.local
 
-# Vercel
+
+# vercel
 .vercel
 
-# Turborepo
+# typescript
+dist/
+.cache
+
+# turbo
 .turbo
 
-## Django ##
-venv
-.venv
-*.pyc
-staticfiles
-mediafiles
-.env
-.DS_Store
-logs/
-htmlcov/
-.coverage
+# docker
+docker-compose.override.yml
 
-node_modules/
-assets/dist/
-npm-debug.log
-yarn-error.log
-pnpm-debug.log
+# runtime env
+__ENV.js
+i18n.cache
 
-# Editor directories and files
-.idea
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-package-lock.json
-.vscode
+# pgdata
+/apps/web/pgdata
 
-# Sentry
-.sentryclirc
-
-# lock files
-package-lock.json
-
-
-
-.secrets
-tmp/
-
-## packages
-dist
-.temp/
-deploy/selfhost/plane-app/
-
-## Storybook
-*storybook.log
-output.css
-
-dev-editor
-# Redis
-*.rdb
-*.rdb.gz
-
-storybook-static
-
-CLAUDE.md
-
-build/
-.react-router/
-
-build/
-.react-router/
-temp/
+# local scripts
 scripts/
-!packages/i18n/scripts/
 
-# i18n auto-generated types (regenerated on every build)
-packages/i18n/src/types/keys.generated.ts
-
-# Local security notes (not for version control)
-/security/
-
-# aaPanel local deployment secrets
-.env.aapanel
+.claude

@@ -1,18 +1,31 @@
 {
+  "extends": "@kan/tsconfig/base.json",
   "compilerOptions": {
-    "rootDirs": [".", "./.react-router/types"],
+    "lib": [
+      "ES2022",
+      "dom",
+      "dom.iterable"
+    ],
+    "jsx": "preserve",
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
-      "package.json": ["./package.json"]
+      "~/*": [
+        "./src/*"
+      ]
     },
-    "strictNullChecks": true,
-    "exactOptionalPropertyTypes": false,
-    "noUnusedParameters": false,
-    "noUnusedLocals": false,
-    "noImplicitReturns": false,
-    "noImplicitOverride": false,
-    "types": ["vite/client"]
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "module": "esnext"
   },
-  "extends": "@plane/typescript-config/react-router.json",
-  "include": ["**/*", "**/.server/**/*", "**/.client/**/*", ".react-router/types/**/*"]
+  "include": [
+    ".",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "public"
+  ]
 }

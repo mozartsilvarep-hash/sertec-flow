@@ -1,0 +1,80 @@
+import type { ReactNode } from "react";
+import { I18nProvider } from "@lingui/react";
+import { createContext, useContext, useEffect, useState } from "react";
+
+import type { Locale } from "~/locales";
+import { defaultLocale, locales } from "~/locales";
+import { activateLocale, i18n, initializeI18n } from "~/utils/i18n";
+
+interface LinguiContextType {
+  locale: Locale;
+  setLocale: (locale: Locale) => void;
+  availableLocales: Locale[];
+}
+
+const LinguiContext = createContext<LinguiContextType | undefined>(undefined);
+
+export function useLinguiContext() {
+  const context = useContext(LinguiContext);
+  if (!context) {
+    throw new Error("useLinguiContext must be used within a LinguiProvider");
+  }
+  return context;
+}
+
+interface LinguiProviderProps {
+  children: ReactNode;
+  initialLocale?: Locale;
+}
+
+export function LinguiProviderWrapper({
+  children,
+  initialLocale = defaultLocale,
+}: LinguiProviderProps) {
+  const [locale, setLocale] = useState<Locale>(defaultLocale);
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  initializeI18n();
+
+  useEffect(() => {
+    const storedLocale = localStorage.getItem("locale");
+    const savedLocale = (
+      storedLocale === "ptbr" ? "pt-BR" : storedLocale
+    ) as Locale | null;
+
+    if (savedLocale && locales.includes(savedLocale)) {
+      setLocale(savedLocale);
+    } else {
+      setLocale(initialLocale);
+    }
+    setIsHydrated(true);
+  }, [initialLocale]);
+
+  useEffect(() => {
+    let cancelled = false;
+    if (isHydrated) {
+      void activateLocale(locale)
+        .then(() => {
+          if (cancelled) return;
+          localStorage.setItem("locale", locale);
+          document.documentElement.lang = locale;
+        })
+        .catch(() => {
+          if (!cancelled) setLocale(defaultLocale);
+        });
+    }
+    return () => {
+      cancelled = true;
+    };
+  }, [locale, isHydrated]);
+
+  return (
+    <LinguiContext.Provider
+      value={{ locale, setLocale, availableLocales: [...locales] }}
+    >
+      <I18nProvider i18n={i18n} key={locale}>
+        {children}
+      </I18nProvider>
+    </LinguiContext.Provider>
+  );
+}

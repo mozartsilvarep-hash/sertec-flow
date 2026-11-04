@@ -1,0 +1,40 @@
+name: SerTec - validar nova base
+
+on:
+  push:
+    branches: ["sertec/kan"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sertec-validate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      CI: "true"
+      NEXT_TELEMETRY_DISABLED: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version-file: ".nvmrc"
+          cache: pnpm
+      - name: Instalar dependências
+        run: pnpm install --frozen-lockfile
+      - name: Validar idioma e página inicial
+        run: pnpm --filter @kan/web exec vitest run src/utils/locale.test.ts src/middleware.test.ts
+      - name: Gerar o código correspondente
+        run: python3 tools/package-source.py
+      - name: Compilar aplicação
+        run: pnpm --filter @kan/web build
+      - name: Validar tipos
+        run: pnpm --filter @kan/web typecheck
+      - name: Validar novas páginas e idioma
+        run: pnpm --filter @kan/web exec eslint src/components/SertecLogo.tsx src/components/SertecAuthLayout.tsx src/pages/index.tsx src/pages/planos.tsx src/pages/sobre.tsx src/providers/lingui.tsx src/utils/i18n.ts src/middleware.ts src/middleware.test.ts

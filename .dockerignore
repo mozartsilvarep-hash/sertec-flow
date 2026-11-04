@@ -1,72 +1,62 @@
-.git
-*.pyc
+# Environment
 .env
-venv
-.venv
-node_modules/
-**/node_modules/
-npm-debug.log
-.next/
-**/.next/
-.turbo/
-**/.turbo/
-build/
-**/build/
-out/
-**/out/
-dist/
-**/dist/
-# Logs
-npm-debug.log*
-pnpm-debug.log*
-.pnpm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+.env.*
+!.env.example
 
-# OS junk
+# Docker
+docker-compose*.yml
+.dockerignore
+
+# Dependencies (rebuilt in Docker)
+node_modules
+**/node_modules
+
+# Build outputs (rebuilt in Docker)
+**/.next
+**/dist
+**/out
+**/.turbo
+**/.cache
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
 .DS_Store
 Thumbs.db
 
-# Editor settings
-.vscode
-.idea
+# CI/CD
+.github
+.husky
+.changeset
 
-# Coverage and test output
-coverage/
-**/coverage/
-*.lcov
-.junit/
-test-results/
+# Documentation (not needed in build)
+*.md
+!packages/db/migrations/**
+LICENSE
+CONTRIBUTING.md
+AGENTS.md
+CHANGELOG.md
 
-# Caches and build artifacts
-.cache/
-**/.cache/
-storybook-static/
-*storybook.log
-*.tsbuildinfo
+# Test files
+**/*.test.ts
+**/*.test.tsx
+**/*.spec.ts
+**/*.spec.tsx
+**/__tests__
+**/coverage
 
-# Local env and secrets
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-.secrets
-tmp/
-temp/
+# Logs
+pnpm-debug.log
+**/pnpm-debug.log
 
-# Database/cache dumps
-*.rdb
-*.rdb.gz
-
-# Misc
-*.pem
-*.key
-
-# React Router - https://github.com/remix-run/react-router-templates/blob/dc79b1a065f59f3bfd840d4ef75cc27689b611e6/default/.dockerignore
-.react-router/
-build/
-node_modules/
-README.md
-
-# Credenciais locais do aaPanel
-.env.aapanel
+# Cloud compose (separate deployment)
+cloud/

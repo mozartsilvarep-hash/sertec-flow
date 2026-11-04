@@ -1,177 +1,161 @@
 services:
+  migrate:
+    image: ghcr.io/kanbn/kan-migrate:latest
+    container_name: ${CONTAINER_NAME:-kan-migrate}
+    networks:
+      - kan-network
+    build:
+      context: .
+      dockerfile: ./apps/web/Dockerfile
+      target: migrate
+    environment:
+      - POSTGRES_URL=${POSTGRES_URL}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
   web:
-    container_name: web
-    build:
-      context: .
-      dockerfile: ./apps/web/Dockerfile.web
-      args:
-        DOCKER_BUILDKIT: 1
-    restart: always
-    depends_on:
-      - api
-
-  admin:
-    container_name: admin
-    build:
-      context: .
-      dockerfile: ./apps/admin/Dockerfile.admin
-      args:
-        DOCKER_BUILDKIT: 1
-    restart: always
-    depends_on:
-      - api
-      - web
-
-  space:
-    container_name: space
-    build:
-      context: .
-      dockerfile: ./apps/space/Dockerfile.space
-      args:
-        DOCKER_BUILDKIT: 1
-    restart: always
-    depends_on:
-      - api
-      - web
-
-  api:
-    container_name: api
-    build:
-      context: ./apps/api
-      dockerfile: Dockerfile.api
-      args:
-        DOCKER_BUILDKIT: 1
-    restart: always
-    command: ./bin/docker-entrypoint-api.sh
-    env_file:
-      - ./apps/api/.env
-    depends_on:
-      - plane-db
-      - plane-redis
-
-  worker:
-    container_name: bgworker
-    build:
-      context: ./apps/api
-      dockerfile: Dockerfile.api
-      args:
-        DOCKER_BUILDKIT: 1
-    restart: always
-    command: ./bin/docker-entrypoint-worker.sh
-    env_file:
-      - ./apps/api/.env
-    depends_on:
-      - api
-      - plane-db
-      - plane-redis
-
-  beat-worker:
-    container_name: beatworker
-    build:
-      context: ./apps/api
-      dockerfile: Dockerfile.api
-      args:
-        DOCKER_BUILDKIT: 1
-    restart: always
-    command: ./bin/docker-entrypoint-beat.sh
-    env_file:
-      - ./apps/api/.env
-    depends_on:
-      - api
-      - plane-db
-      - plane-redis
-
-  migrator:
-    container_name: plane-migrator
-    build:
-      context: ./apps/api
-      dockerfile: Dockerfile.api
-      args:
-        DOCKER_BUILDKIT: 1
-    restart: no
-    command: ./bin/docker-entrypoint-migrator.sh
-    env_file:
-      - ./apps/api/.env
-    depends_on:
-      - plane-db
-      - plane-redis
-
-  live:
-    container_name: plane-live
-    build:
-      context: .
-      dockerfile: ./apps/live/Dockerfile.live
-      args:
-        DOCKER_BUILDKIT: 1
-    restart: always
-
-  plane-db:
-    container_name: plane-db
-    image: postgres:15.7-alpine
-    restart: always
-    command: postgres -c 'max_connections=1000'
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    env_file:
-      - .env
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      PGDATA: /var/lib/postgresql/data
-
-  plane-redis:
-    container_name: plane-redis
-    image: valkey/valkey:7.2.11-alpine
-    restart: always
-    volumes:
-      - redisdata:/data
-
-  plane-mq:
-    container_name: plane-mq
-    image: rabbitmq:3.13.6-management-alpine
-    restart: always
-    env_file:
-      - .env
-    environment:
-      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
-      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
-      RABBITMQ_DEFAULT_VHOST: ${RABBITMQ_VHOST}
-    volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
-
-  plane-minio:
-    container_name: plane-minio
-    image: docker.io/pgsty/silo:RELEASE.2026-09-16T00-00-00Z
-    restart: always
-    command: server /export --console-address ":9090"
-    volumes:
-      - uploads:/export
-    environment:
-      MINIO_ROOT_USER: ${AWS_ACCESS_KEY_ID}
-      MINIO_ROOT_PASSWORD: ${AWS_SECRET_ACCESS_KEY}
-
-  # Comment this if you already have a reverse proxy running
-  proxy:
-    container_name: proxy
-    build:
-      context: ./apps/proxy
-      dockerfile: Dockerfile.ce
-    restart: always
+    image: ghcr.io/kanbn/kan:latest
+    container_name: ${CONTAINER_NAME:-kan-web}
     ports:
-      - ${LISTEN_HTTP_PORT}:80
-      - ${LISTEN_HTTPS_PORT}:443
+      - "${WEB_PORT:-3000}:3000"
+    networks:
+      - kan-network
+    build:
+      context: .
+      dockerfile: ./apps/web/Dockerfile
+      target: web
+    env_file:
+      - .env
     environment:
-      FILE_SIZE_LIMIT: ${FILE_SIZE_LIMIT:-5242880}
-      BUCKET_NAME: ${AWS_S3_BUCKET_NAME:-uploads}
+      # Required environment variables
+      - NEXT_PUBLIC_BASE_URL=${NEXT_PUBLIC_BASE_URL}
+      - BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET}
+      - POSTGRES_URL=${POSTGRES_URL}
+
+      # Redis (optional - for rate limiting)
+      - REDIS_URL=${REDIS_URL}
+
+      # Logging (optional - debug, info, warn, error; defaults to debug in dev, info in prod)
+      - LOG_LEVEL=${LOG_LEVEL}
+
+      # Admin API key (optional)
+      - KAN_ADMIN_API_KEY=${KAN_ADMIN_API_KEY}
+
+      # SMTP (optional)
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - EMAIL_FROM=${EMAIL_FROM}
+      - SMTP_REJECT_UNAUTHORIZED=${SMTP_REJECT_UNAUTHORIZED}
+
+      # Disable email features entirely (optional)
+      - NEXT_PUBLIC_DISABLE_EMAIL=${NEXT_PUBLIC_DISABLE_EMAIL}
+
+      # S3 storage (optional)
+      - S3_ACCESS_KEY_ID=${S3_ACCESS_KEY_ID}
+      - S3_SECRET_ACCESS_KEY=${S3_SECRET_ACCESS_KEY}
+      - S3_REGION=${S3_REGION}
+      - S3_ENDPOINT=${S3_ENDPOINT}
+      - S3_FORCE_PATH_STYLE=${S3_FORCE_PATH_STYLE}
+      - S3_AVATAR_UPLOAD_LIMIT=${S3_AVATAR_UPLOAD_LIMIT}
+      - NEXT_PUBLIC_STORAGE_URL
+      - NEXT_PUBLIC_AVATAR_BUCKET_NAME=${NEXT_PUBLIC_AVATAR_BUCKET_NAME}
+      - NEXT_PUBLIC_ATTACHMENTS_BUCKET_NAME=${NEXT_PUBLIC_ATTACHMENTS_BUCKET_NAME}
+      - NEXT_PUBLIC_STORAGE_DOMAIN=${NEXT_PUBLIC_STORAGE_DOMAIN}
+      - NEXT_PUBLIC_USE_VIRTUAL_HOSTED_URLS=${NEXT_PUBLIC_USE_VIRTUAL_HOSTED_URLS}
+
+      # White label
+      - NEXT_PUBLIC_WHITE_LABEL_HIDE_POWERED_BY=${NEXT_PUBLIC_WHITE_LABEL_HIDE_POWERED_BY}
+
+      # Auth config (optional)
+      # NEXT_PUBLIC_ALLOW_CREDENTIALS must be "true" for email & password auth.
+      # If it is blank and no OAuth/OIDC provider is configured, the sign up page
+      # has no available auth method and no user can be created.
+      - NEXT_PUBLIC_ALLOW_CREDENTIALS=${NEXT_PUBLIC_ALLOW_CREDENTIALS}
+      - NEXT_PUBLIC_DISABLE_SIGN_UP=${NEXT_PUBLIC_DISABLE_SIGN_UP}
+
+      # API configuration (optional)
+      - NEXT_API_BODY_SIZE_LIMIT=${NEXT_API_BODY_SIZE_LIMIT}
+
+      # Integration providers (optional)
+      - TRELLO_APP_API_KEY=${TRELLO_APP_API_KEY}
+      - TRELLO_APP_SECRET=${TRELLO_APP_SECRET}
+
+      # Generic OIDC provider (optional)
+      - OIDC_CLIENT_ID=${OIDC_CLIENT_ID}
+      - OIDC_CLIENT_SECRET=${OIDC_CLIENT_SECRET}
+      - OIDC_DISCOVERY_URL=${OIDC_DISCOVERY_URL}
+
+      # OAuth providers (optional)
+      - BETTER_AUTH_TRUSTED_ORIGINS=${BETTER_AUTH_TRUSTED_ORIGINS}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - BETTER_AUTH_ALLOWED_DOMAINS=${BETTER_AUTH_ALLOWED_DOMAINS}
+      - DISCORD_CLIENT_ID=${DISCORD_CLIENT_ID}
+      - DISCORD_CLIENT_SECRET=${DISCORD_CLIENT_SECRET}
+      - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
+      - GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}
+      - GITLAB_CLIENT_ID=${GITLAB_CLIENT_ID}
+      - GITLAB_CLIENT_SECRET=${GITLAB_CLIENT_SECRET}
+      - GITLAB_ISSUER=${GITLAB_ISSUER}
+      - MICROSOFT_CLIENT_ID=${MICROSOFT_CLIENT_ID}
+      - MICROSOFT_CLIENT_SECRET=${MICROSOFT_CLIENT_SECRET}
+      - TWITTER_CLIENT_ID=${TWITTER_CLIENT_ID}
+      - TWITTER_CLIENT_SECRET=${TWITTER_CLIENT_SECRET}
+      - KICK_CLIENT_ID=${KICK_CLIENT_ID}
+      - KICK_CLIENT_SECRET=${KICK_CLIENT_SECRET}
+      - ZOOM_CLIENT_ID=${ZOOM_CLIENT_ID}
+      - ZOOM_CLIENT_SECRET=${ZOOM_CLIENT_SECRET}
+      - DROPBOX_CLIENT_ID=${DROPBOX_CLIENT_ID}
+      - DROPBOX_CLIENT_SECRET=${DROPBOX_CLIENT_SECRET}
+      - VK_CLIENT_ID=${VK_CLIENT_ID}
+      - VK_CLIENT_SECRET=${VK_CLIENT_SECRET}
+      - LINKEDIN_CLIENT_ID=${LINKEDIN_CLIENT_ID}
+      - LINKEDIN_CLIENT_SECRET=${LINKEDIN_CLIENT_SECRET}
+      - REDDIT_CLIENT_ID=${REDDIT_CLIENT_ID}
+      - REDDIT_CLIENT_SECRET=${REDDIT_CLIENT_SECRET}
+      - ROBLOX_CLIENT_ID=${ROBLOX_CLIENT_ID}
+      - ROBLOX_CLIENT_SECRET=${ROBLOX_CLIENT_SECRET}
+      - SPOTIFY_CLIENT_ID=${SPOTIFY_CLIENT_ID}
+      - SPOTIFY_CLIENT_SECRET=${SPOTIFY_CLIENT_SECRET}
+      - TIKTOK_CLIENT_ID=${TIKTOK_CLIENT_ID}
+      - TIKTOK_CLIENT_SECRET=${TIKTOK_CLIENT_SECRET}
+      - TIKTOK_CLIENT_KEY=${TIKTOK_CLIENT_KEY}
+      - TWITCH_CLIENT_ID=${TWITCH_CLIENT_ID}
+      - TWITCH_CLIENT_SECRET=${TWITCH_CLIENT_SECRET}
+      - APPLE_CLIENT_ID=${APPLE_CLIENT_ID}
+      - APPLE_CLIENT_SECRET=${APPLE_CLIENT_SECRET}
+      - APPLE_APP_BUNDLE_IDENTIFIER=${APPLE_APP_BUNDLE_IDENTIFIER}
     depends_on:
-      - web
-      - api
-      - space
-      - admin
+      migrate:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:15
+    container_name: kan-db
+    environment:
+      - POSTGRES_DB=kan_db
+      - POSTGRES_USER=kan
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - 5432:5432
+    volumes:
+      - kan_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kan -d kan_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+    networks:
+      - kan-network
+
+networks:
+  kan-network:
 
 volumes:
-  pgdata:
-  redisdata:
-  uploads:
-  rabbitmq_data:
+  kan_postgres_data:
